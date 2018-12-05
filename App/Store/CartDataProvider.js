@@ -11,11 +11,30 @@ const CartDataProvider = {
       CartSchema.create("CartItem", listData);
     });
   },
+  update: function(listData, productId, callback) {
+    var id = listData.id;
+    console.log(listData, "listData");
+    //if (!callback) return;
+    CartSchema.write(() => {
+      //callback();
+      CartSchema.create(
+        "CartItem",
+        {
+          ...listData
+        },
+        true
+      );
+    });
+  },
   deleteAll: function() {
     var storedData = CartSchema.objects("CartItem");
     CartSchema.write(() => {
       CartSchema.delete(storedData);
     });
+  },
+  findById: function(id) {
+    var specifiedData = CartSchema.objects("CartItem").filtered("id =" + id);
+    return specifiedData;
   },
   deleteById: function(id) {
     var storedData = CartSchema.objects("CartItem").filtered("id =" + id);

@@ -1,11 +1,12 @@
 class CartModel {
-  constructor(id, imageUrl, itemName, price, rating) {
-    console.log(id, imageUrl, itemName, price, rating, "constructor");
+  constructor(id, imageUrl, itemName, price, rating, quantity = 1) {
+    console.log(quantity, "constructor");
     this.id = id;
     this.imageUrl = imageUrl;
     this.itemName = itemName;
     this.price = price;
     this.rating = rating;
+    this.quantity = quantity;
   }
 }
 

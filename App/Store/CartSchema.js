@@ -8,13 +8,14 @@ const cartSchema = {
     imageUrl: "string",
     itemName: "string",
     price: "float",
-    rating: "float"
+    rating: "float",
+    quantity: "int"
   }
 };
 
 let CartSchema = new Realm({
   schema: [cartSchema],
-  schemaVersion: 1
+  schemaVersion: 2
 });
 
 export default CartSchema;

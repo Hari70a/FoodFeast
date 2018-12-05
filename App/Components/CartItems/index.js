@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, FlatList } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  ScrollView
+} from "react-native";
 import { foodItems, colors } from "../../Config";
 import Recipe from "../Recipe";
 import CartDataProvider from "../../Store/CartDataProvider";
@@ -23,13 +30,19 @@ export default class CartItems extends Component<Props> {
 
   render() {
     return (
-      <View style={styles.container}>
-        <FlatList
-          data={this.state.savedFoodItems}
-          renderItem={({ item }) => <Recipe {...item} />}
-          keyExtractor={this._keyExtractor}
-        />
-      </View>
+      <ScrollView style={styles.container}>
+        <Text>Your Orders</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ flex: 0.2 }}>
+            <Text>1X </Text>
+          </View>
+        </View>
+
+        <Text />
+        <Text />
+        <Text />
+        <Text />
+      </ScrollView>
     );
   }
 }
