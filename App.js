@@ -17,18 +17,19 @@ export default class App extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      foodItems: foodItems
+      foodItems: [{ item_name: "Pasta" }, { item_name: "pizza" }]
     };
   }
 
   _keyExtractor = (item, index) => `${item.id}`;
-
+  // <Recipe {...item} />
   render() {
     return (
       <View style={styles.container}>
+        <Text>App screen</Text>
         <FlatList
           data={this.state.foodItems}
-          renderItem={({ item }) => <Recipe {...item} />}
+          renderItem={({ item }) => <Text>{item.item_name}</Text>}
           keyExtractor={this._keyExtractor}
         />
       </View>

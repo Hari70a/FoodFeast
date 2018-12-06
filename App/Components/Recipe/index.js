@@ -6,6 +6,7 @@ import CartModel from "../../Store/CartModel";
 import CartDataProvider from "../../Store/CartDataProvider";
 import AddCart from "./AddCart";
 import RemoveCart from "./RemoveCart";
+import Description from "./Description";
 
 export default class Recipe extends Component {
   constructor(props) {
@@ -16,56 +17,49 @@ export default class Recipe extends Component {
     };
   }
 
-  componentDidMount() {
-    // cos
-    //this.isItemInCart();
-    // CartDataProvider.deleteAll();
-  }
-  // <TouchableHighlight
-  //         onPress={this.cartPhenoma}
-  //         underlayColor={colors.bgColor}
-  //       >
   isItemInCart = id => {
-    const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
-    console.log(typeof temp, temp[0], "temp");
-    if (temp[0]) return true;
-    else return false;
+    // const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
+    // console.log(typeof temp, temp[0], "temp");
+    // if (temp[0]) return true;
+    // else return false;
   };
 
   render() {
     console.log(this.props, "Props ");
-    // const temp = Array.from(CartDataProvider.findById(this.props.id));
-    const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
-    console.log(typeof temp, temp[0], "temp");
+    // // const temp = Array.from(CartDataProvider.findById(this.props.id));
+    // const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
+    // console.log(typeof temp, temp[0], "temp");
     // console.log(
     //   Object.assign({}, CartDataProvider.findById(this.props.id)),
     //   "Isavailable"
     // );
     return (
       <View style={styles.container}>
-        <View>
-          <ImageWrapper
-            sourceUrl={this.props.image_url}
-            itemName={this.props.item_name}
-          />
-          <View style={styles.itemDescription}>
-            <View style={styles.priceContainer}>
-              <Text style={styles.ratingTxt}>₹ {this.props.item_price}</Text>
+        <TouchableHighlight
+          onPress={this.navigateToDetails}
+          underlayColor={colors.bgColor}
+        >
+          <View>
+            <View>
+              <ImageWrapper
+                sourceUrl={this.props.image_url}
+                itemName={this.props.item_name}
+              />
+              <Description
+                itemPrice={this.props.item_price}
+                avgRating={this.props.average_rating}
+              />
             </View>
-            <View style={styles.ratingContainer}>
-              <Text style={styles.ratingTxt}>
-                Rating: {this.props.average_rating}
-                <Text style={{ fontSize: 20 }}>★</Text>
-              </Text>
-            </View>
-          </View>
-          <View style={styles.cartBtnContainer}>
-            <AddCart onPress={this.add} />
-            {this.isItemInCart(this.props.id) ? (
+            <View style={styles.cartBtnContainer}>
+              <AddCart onPress={this.add} />
               <RemoveCart onPress={this.remove} />
-            ) : null}
+              {/* <RemoveCart onPress={this.remove} /> */}
+              {/* {this.isItemInCart(this.props.id) ? (
+                <RemoveCart onPress={this.remove} />
+              ) : null} */}
+            </View>
           </View>
-        </View>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -96,24 +90,24 @@ export default class Recipe extends Component {
     );
   };
 
-  removeCart = () => {
-    CartDataProvider.deleteById(this.props.id);
-  };
-  // actionToPerform = action => {
-  //   //qty = 1 and add
-  //   if (this.state.quantity === 1 && action == "add") addcartPhenoma();
-  //   //qty= 1 and remove
-  //   else if (this.state.quantity === 1 && action == "add") deleteCartById();
-  //   //qty = 0 and add/remove
-  //   else if (
-  //     this.state.quantity === 0 &&
-  //     (action == "add" || action == "remove")
-  //   )
-  //     showAlert();
-  //   else if (this.state.quantity === 1 && action == "add") {
-  //     //Only
-  //   }
+  // removeCart = () => {
+  //   CartDataProvider.deleteById(this.props.id);
   // };
+  actionToPerform = action => {
+    //qty = 1 and add
+    if (this.state.quantity === 1 && action == "add") addcartPhenoma();
+    //qty= 1 and remove
+    else if (this.state.quantity === 1 && action == "add") deleteCartById();
+    //qty = 0 and add/remove
+    else if (
+      this.state.quantity === 0 &&
+      (action == "add" || action == "remove")
+    )
+      showAlert();
+    else if (this.state.quantity === 1 && action == "add") {
+      //Only
+    }
+  };
 
   addCart = () => {
     console.log(this.props, this.state.quantity, "cartPhenomena");
@@ -122,11 +116,15 @@ export default class Recipe extends Component {
       this.props.image_url,
       this.props.item_name,
       this.props.item_price,
-      this.props.average_rating,
-      2
+      this.props.average_rating
     );
     console.log(itemToSave, "data");
     CartDataProvider.save(itemToSave);
+  };
+
+  navigateToDetails = () => {
+    console.log(this.props, " INNN $$$$$ Ppros");
+    this.props.navigation.navigate("Details", { ...this.props });
   };
 }
 

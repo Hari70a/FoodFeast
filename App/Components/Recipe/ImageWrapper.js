@@ -4,13 +4,14 @@ import { colors } from "../../Config";
 
 export default class ImageWrapper extends Component {
   render() {
+    const style = this.props.style ? this.props.style : {};
     return (
       <View style={{ flex: 0.8 }}>
         <ImageBackground
           source={{ uri: this.props.sourceUrl }}
-          style={styles.imageStyle}
-          borderTopLeftRadius={10}
-          borderTopRightRadius={10}
+          style={[styles.imageStyle, style]}
+          borderTopLeftRadius={this.props.style ? 0 : 10}
+          borderTopRightRadius={this.props.style ? 0 : 10}
         >
           <View style={styles.itemNameContainer}>
             <Text style={styles.itemName}>{this.props.itemName}</Text>
