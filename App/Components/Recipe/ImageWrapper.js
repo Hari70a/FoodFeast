@@ -5,6 +5,7 @@ import { colors } from "../../Config";
 export default class ImageWrapper extends Component {
   render() {
     const style = this.props.style ? this.props.style : {};
+    const { borderTopLeftRadius, borderTopRightRadius } = style;
     return (
       <View style={{ flex: 0.8 }}>
         <ImageBackground
@@ -13,7 +14,19 @@ export default class ImageWrapper extends Component {
           borderTopLeftRadius={this.props.style ? 0 : 10}
           borderTopRightRadius={this.props.style ? 0 : 10}
         >
-          <View style={styles.itemNameContainer}>
+          <View
+            style={[
+              styles.itemNameContainer,
+              {
+                borderTopLeftRadius: borderTopLeftRadius
+                  ? borderTopLeftRadius
+                  : 10,
+                borderTopRightRadius: borderTopRightRadius
+                  ? borderTopRightRadius
+                  : 10
+              }
+            ]}
+          >
             <Text style={styles.itemName}>{this.props.itemName}</Text>
           </View>
         </ImageBackground>
@@ -36,8 +49,6 @@ const styles = StyleSheet.create({
   },
   itemNameContainer: {
     backgroundColor: colors.shadeColor,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
     ...center,
     ...posFixed
   },

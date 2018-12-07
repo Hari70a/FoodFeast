@@ -17,6 +17,10 @@ export default class Recipe extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log([...CartDataProvider.findAll()]);
+  }
+
   isItemInCart = id => {
     // const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
     // console.log(typeof temp, temp[0], "temp");

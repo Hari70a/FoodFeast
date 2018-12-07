@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { Text } from "react-native";
 import HomeScreen from "../../Components/Home";
 import DetailsScreen from "../../Components/Recipe/Details";
+import CartItemsScreen from "../../Components/CartItems/";
+
 import { colors } from "../../Config/";
 
 const Header = props => {
@@ -39,9 +41,15 @@ const RootStack = createStackNavigator(
     },
     Details: {
       navigationOptions: ({ navigation }) => ({
-        header: <Header title="Details" />
+        header: null
       }),
       screen: DetailsScreen
+    },
+    CartItems: {
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      }),
+      screen: CartItemsScreen
     }
   },
   {

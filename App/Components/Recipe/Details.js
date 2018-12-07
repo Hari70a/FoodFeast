@@ -1,16 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View, FlatList } from "react-native";
 import ImageWrapper from "./ImageWrapper";
 import { colors } from "../../Config/";
 import Description from "./Description";
+import HeaderWithBack from "../Header/HeaderWithBack";
 
 export default class Details extends Component {
   constructor(props) {
@@ -19,9 +12,12 @@ export default class Details extends Component {
   }
 
   render() {
-    console.log(this.props, "Details");
     return (
       <View style={styles.container}>
+        <HeaderWithBack
+          title={"Your Cart"}
+          moveToPrevious={() => this.props.navigation.goBack()}
+        />
         <View style={{ flex: 0.5 }}>
           <ImageWrapper
             style={{

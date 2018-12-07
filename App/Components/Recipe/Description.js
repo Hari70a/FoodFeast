@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { foodItems, colors } from "../../Config";
 
 type Props = {};
+
 export default class Home extends Component<Props> {
   constructor(props) {
     super(props);
@@ -10,10 +11,6 @@ export default class Home extends Component<Props> {
       foodItems: foodItems
     };
   }
-  componentDidMount() {}
-
-  _keyExtractor = (item, index) => `${item.id}`;
-
   render() {
     return (
       <View style={styles.itemDescription}>

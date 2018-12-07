@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from "react";
 import {
   Platform,
@@ -70,13 +62,21 @@ export default class Home extends Component {
     }
   };
 
+  moveToPrevious = () =>{
+    this.props.navigation.goBack()
+  }
+  
+  gotoCart =() =>{
+    this.props.navigation.navigate('CartItems')
+  }
+
   render() {
     if (this.state.isLoading) {
       return <Loading />;
     }
     return (
       <View style={styles.container}>
-        <Header title={"FoodFeast"} toggleModal={this.toggleModal} />
+        <Header title={"FoodFeast"} toggleModal={this.toggleModal} gotoPrevious={this.moveToPrevious} gotoCart={this.gotoCart}/>
         <MenuModal
           modalVisible={this.state.modalVisible}
           toggleModal={this.toggleModal}

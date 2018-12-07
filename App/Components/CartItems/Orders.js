@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View, FlatList } from "react-native";
 import { foodItems, colors } from "../../Config";
@@ -32,7 +24,6 @@ export default class Orders extends Component<Props> {
               <View style={styles.items}>
                 <Text style={styles.itemTxt}>{cur.itemName}</Text>
               </View>
-
               <View style={styles.total}>
                 <Text style={styles.priceTxt}>₹ {cur.itemPrice}</Text>
               </View>

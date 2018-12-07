@@ -25,7 +25,7 @@ export default class Header extends Component {
           >
             <Text>FilterBy</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterbyStyle}>
+          <TouchableOpacity style={styles.filterbyStyle} onPress={()=>this.props.gotoCart()}>
             <Text>AddCart</Text>
           </TouchableOpacity>
         </View>
