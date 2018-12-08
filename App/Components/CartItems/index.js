@@ -13,46 +13,68 @@ export default class CartItems extends Component {
     super(props);
     this.state = {
       savedFoodItems: [],
+      subtotal: 0,
       couponCode: "",
-      alertTxt: ""
+      alertTxt: "",
+      deliveryFee: 30,
+      total: 0
     };
   }
 
   componentDidMount() {
     const savedFoodItems = Array.from(CartDataProvider.findAll());
     console.log(savedFoodItems, "response");
+    this.calcSubtotal(savedFoodItems);
     this.setState({ savedFoodItems });
   }
 
-  confirmCoupon = () => {
+  getAlertTxt = () => {
     let txt;
-    if (this.state.txt === "FREEDEL" && this.state.subTotal >= 100) {
+    if (this.state.txt === "FREEDEL" && this.state.subTotal > 100) {
       txt = "Coupon code applied";
-    } else if (this.state.txt === "F22LABS" && this.state.subTotal >= 400) {
+      this.setState({ deliveryFee: 0 }, () =>
+        this.calcTotal(this.state.subTotal)
+      );
+    } else if (this.state.txt === "SPRITLE" && this.state.subTotal > 400) {
       txt = "Coupon code applied";
+      this.updateSubTotal();
     } else {
       txt = "Please enter valid coupon code";
     }
-    this.setState({ alertTxt: txt });
+    return txt;
+  };
+
+  updateSubTotal = () => {
+    //this.setState({ alertTxt: this.getAlertTxt() });
   };
 
   onChangeCode = code => {
     this.setState(code);
   };
 
+  calcSubtotal = savedItems => {
+    console.log(savedItems, this.state.savedFoodItems, "foodItems");
+    const subtotal = savedItems.reduce((acc, cur) => {
+      console.log(acc, cur, "acc, cur");
+      return acc + cur.price;
+    }, 0);
+    this.calcTotal(subtotal);
+  };
+
+  calcTotal = subtotal => {
+    const total = this.state.deliveryFee + subtotal;
+    this.setState({ subtotal, total });
+  };
+
   render() {
+    console.log(this.state, "svedFoodItems");
     return (
       <ScrollView style={styles.container}>
         <HeaderWithBack
           title={"Your Cart"}
           moveToPrevious={() => this.props.navigation.goBack()}
         />
-        <Orders
-          items={[
-            { quantity: 1, itemName: "Pasta", itemPrice: 200 },
-            { quantity: 1, itemName: "Pizza", itemPrice: 150 }
-          ]}
-        />
+        <Orders items={this.state.savedFoodItems} />
         <CouponField
           code={this.state.couponCode}
           onChangeCode={this.onChangeCode}
@@ -62,17 +84,17 @@ export default class CartItems extends Component {
         <View style={styles.subtotalContainer}>
           <RowField
             caption={"Subtotal"}
-            amount={350}
+            amount={this.state.subtotal}
             style={{ marginLeft: 10 }}
           />
           <RowField
             caption={"Deliver fee"}
-            amount={10}
+            amount={this.state.deliveryFee}
             style={{ marginLeft: 10, marginTop: 10 }}
           />
         </View>
         <View style={styles.subtotalContainer}>
-          <RowField caption={"Total"} amount={460} />
+          <RowField caption={"Total"} amount={this.state.total} />
         </View>
       </ScrollView>
     );

@@ -19,15 +19,25 @@ import APIHandlers from "../../Services/APIHandlers";
 export default class Home extends Component {
   constructor(props) {
     super(props);
+    this.id = 1;
     this.state = {
       foodItems: [],
       isLoading: true,
       modalVisible: false
     };
   }
+
   componentDidMount() {
     APIHandlers.getFoodItems().then(responseData => {
-      this.setState({ foodItems: responseData, isLoading: false });
+      const formattedData = [];
+      responseData.map(item => {
+        formattedData.push({
+          id: this.id++,
+          ...item
+        });
+      });
+      console.log(formattedData, "formattedData");
+      this.setState({ foodItems: formattedData, isLoading: false });
     });
   }
 
@@ -62,13 +72,13 @@ export default class Home extends Component {
     }
   };
 
-  moveToPrevious = () =>{
-    this.props.navigation.goBack()
-  }
-  
-  gotoCart =() =>{
-    this.props.navigation.navigate('CartItems')
-  }
+  moveToPrevious = () => {
+    this.props.navigation.goBack();
+  };
+
+  gotoCart = () => {
+    this.props.navigation.navigate("CartItems");
+  };
 
   render() {
     if (this.state.isLoading) {
@@ -76,7 +86,12 @@ export default class Home extends Component {
     }
     return (
       <View style={styles.container}>
-        <Header title={"FoodFeast"} toggleModal={this.toggleModal} gotoPrevious={this.moveToPrevious} gotoCart={this.gotoCart}/>
+        <Header
+          title={"FoodFeast"}
+          toggleModal={this.toggleModal}
+          gotoPrevious={this.moveToPrevious}
+          gotoCart={this.gotoCart}
+        />
         <MenuModal
           modalVisible={this.state.modalVisible}
           toggleModal={this.toggleModal}

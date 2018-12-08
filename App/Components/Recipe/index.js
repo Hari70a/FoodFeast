@@ -18,7 +18,8 @@ export default class Recipe extends Component {
   }
 
   componentDidMount() {
-    console.log([...CartDataProvider.findAll()]);
+    // console.log(CartDataProvider.deleteAll());
+    console.log([...CartDataProvider.findAll()], "INN Find all");
   }
 
   isItemInCart = id => {

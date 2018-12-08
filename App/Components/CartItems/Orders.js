@@ -4,13 +4,6 @@ import { foodItems, colors } from "../../Config";
 
 type Props = {};
 export default class Orders extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      foodItems: foodItems
-    };
-  }
-
   render() {
     return (
       <View>
@@ -25,7 +18,7 @@ export default class Orders extends Component<Props> {
                 <Text style={styles.itemTxt}>{cur.itemName}</Text>
               </View>
               <View style={styles.total}>
-                <Text style={styles.priceTxt}>₹ {cur.itemPrice}</Text>
+                <Text style={styles.priceTxt}>₹ {cur.price}</Text>
               </View>
             </View>
           );
