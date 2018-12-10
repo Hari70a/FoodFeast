@@ -5,7 +5,6 @@ import HeaderWithBack from "../Header/HeaderWithBack";
 import CouponField from "./CouponField";
 import Orders from "./Orders";
 import RowField from "./RowField";
-
 import CartDataProvider from "../../Store/CartDataProvider";
 
 export default class CartItems extends Component {
@@ -21,57 +20,47 @@ export default class CartItems extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const savedFoodItems = Array.from(CartDataProvider.findAll());
-    console.log(savedFoodItems, "response");
-    this.calcSubtotal(savedFoodItems);
-    this.setState({ savedFoodItems });
+    const subtotal = await this.calcSubtotal(savedFoodItems);
+    const total = this.calcTotal(subtotal, this.state.deliveryFee);
+    this.setState({ savedFoodItems, subtotal, total });
   }
 
-  getAlertTxt = () => {
-    let txt;
-    if (this.state.txt === "FREEDEL" && this.state.subTotal > 100) {
-      txt = "Coupon code applied";
-      this.setState({ deliveryFee: 0 }, () =>
-        this.calcTotal(this.state.subTotal)
-      );
-    } else if (this.state.txt === "SPRITLE" && this.state.subTotal > 400) {
-      txt = "Coupon code applied";
-      this.updateSubTotal();
-    } else {
-      txt = "Please enter valid coupon code";
-    }
-    return txt;
-  };
+  calcDiscount = discPercent => (discPercent / 100) * this.state.total;
 
   updateSubTotal = () => {
-    //this.setState({ alertTxt: this.getAlertTxt() });
+    let alertTxt;
+    if (this.state.couponCode === "FREEDEL" && this.state.subtotal > 100) {
+      const total = this.calcTotal(this.state.subtotal, 0);
+      alertTxt = "Coupon code applied";
+      this.setState({ total, alertTxt, deliveryFee: 0 });
+    } else if (this.state.couponCode === "F22LABS" && this.state.total > 400) {
+      const discount = this.calcDiscount(20);
+      const total = this.state.total - discount;
+      alertTxt = "Coupon code applied";
+      this.setState({ total, alertTxt });
+    } else {
+      alertTxt = "Please enter valid coupon code";
+      this.setState({ alertTxt });
+    }
   };
 
   onChangeCode = code => {
     this.setState(code);
   };
 
-  calcSubtotal = savedItems => {
-    console.log(savedItems, this.state.savedFoodItems, "foodItems");
-    const subtotal = savedItems.reduce((acc, cur) => {
-      console.log(acc, cur, "acc, cur");
-      return acc + cur.price;
-    }, 0);
-    this.calcTotal(subtotal);
-  };
+  calcSubtotal = savedItems =>
+    savedItems.reduce((acc, cur) => acc + cur.price, 0);
 
-  calcTotal = subtotal => {
-    const total = this.state.deliveryFee + subtotal;
-    this.setState({ subtotal, total });
-  };
+  calcTotal = (subtotal, deliveryFee) => deliveryFee + subtotal;
 
   render() {
-    console.log(this.state, "svedFoodItems");
     return (
       <ScrollView style={styles.container}>
         <HeaderWithBack
           title={"Your Cart"}
+          count={data.length}
           moveToPrevious={() => this.props.navigation.goBack()}
         />
         <Orders items={this.state.savedFoodItems} />
@@ -79,7 +68,7 @@ export default class CartItems extends Component {
           code={this.state.couponCode}
           onChangeCode={this.onChangeCode}
           alertTxt={this.state.alertTxt}
-          confirmCoupon={this.confirmCoupon}
+          confirmCoupon={this.updateSubTotal}
         />
         <View style={styles.subtotalContainer}>
           <RowField
@@ -87,11 +76,13 @@ export default class CartItems extends Component {
             amount={this.state.subtotal}
             style={{ marginLeft: 10 }}
           />
-          <RowField
-            caption={"Deliver fee"}
-            amount={this.state.deliveryFee}
-            style={{ marginLeft: 10, marginTop: 10 }}
-          />
+          {this.state.deliveryFee ? (
+            <RowField
+              caption={"Deliver fee"}
+              amount={this.state.deliveryFee}
+              style={{ marginLeft: 10, marginTop: 10 }}
+            />
+          ) : null}
         </View>
         <View style={styles.subtotalContainer}>
           <RowField caption={"Total"} amount={this.state.total} />

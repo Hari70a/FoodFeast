@@ -4,16 +4,43 @@ import ImageWrapper from "./ImageWrapper";
 import { colors } from "../../Config/";
 import Description from "./Description";
 import HeaderWithBack from "../Header/HeaderWithBack";
+import QuantityInput from "./QuantityInput";
+import CustomButton from "../CustomButton";
+import AddCart from "./AddCart";
+import RemoveCart from "./RemoveCart";
+import CartDataProvider from "../../Store/CartDataProvider";
+
 
 export default class Details extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+
+  addCart = () => {
+    console.log(this.props, this.state.quantity, "cartPhenomena");
+    var itemToSave = new CartModel(
+      this.props.id,
+      this.props.image_url,
+      this.props.item_name,
+      this.props.item_price,
+      this.props.average_rating
+    );
+    console.log(itemToSave, "data");
+    CartDataProvider.save(itemToSave);
+  };
+
+  removeCart = id => {
+    //CartDataProvider.deleteById(id);
+  };
+
+  add = () => {
+    this.addCart();
+  };
+
+  remove = () => {
+    this.removeCart();
+  };
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <HeaderWithBack
           title={"Your Cart"}
           moveToPrevious={() => this.props.navigation.goBack()}
@@ -34,25 +61,33 @@ export default class Details extends Component {
             itemPrice={this.props.navigation.state.params.item_price}
             avgRating={this.props.navigation.state.params.average_rating}
           />
+          <View style={styles.rowContainer}>
+            <AddCart onPress={this.add} />
+            <RemoveCart onPress={this.remove} />
+          </View>
+          <QuantityInput
+            count={this.state.quantityCount}
+            onChangeCount={this.onChangeCount}
+          />
+          <View style={styles.centerElem}>
+            <CustomButton
+              onPress={this.updateQuantity}
+              title={"Update cart "}
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
-
+const center={alignItems: 'center',justifyContent: 'center'}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.bgColor
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
+  rowContainer:{
+    flexDirection: 'row',,
+    ...center
   }
 });

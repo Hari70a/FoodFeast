@@ -2,15 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { foodItems, colors } from "../../Config";
 
-type Props = {};
-
-export default class Home extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      foodItems: foodItems
-    };
-  }
+export default class Home extends Component {
   render() {
     return (
       <View style={styles.itemDescription}>

@@ -69,51 +69,6 @@ export default class Recipe extends Component {
     );
   }
 
-  remove = () => {
-    console.log("IJMMM Remove###");
-    this.setState(
-      (prev, props) => {
-        console.log(prev, "prev##@@@@");
-        return {
-          quantity: prev.quantity - 1
-        };
-      },
-      () => this.removeCart()
-    );
-  };
-
-  add = () => {
-    console.log("IJMMM add###");
-    this.setState(
-      (prev, props) => {
-        console.log(prev, "prev##@@@@");
-        return {
-          quantity: prev.quantity + 1
-        };
-      },
-      () => this.addCart()
-    );
-  };
-
-  // removeCart = () => {
-  //   CartDataProvider.deleteById(this.props.id);
-  // };
-  actionToPerform = action => {
-    //qty = 1 and add
-    if (this.state.quantity === 1 && action == "add") addcartPhenoma();
-    //qty= 1 and remove
-    else if (this.state.quantity === 1 && action == "add") deleteCartById();
-    //qty = 0 and add/remove
-    else if (
-      this.state.quantity === 0 &&
-      (action == "add" || action == "remove")
-    )
-      showAlert();
-    else if (this.state.quantity === 1 && action == "add") {
-      //Only
-    }
-  };
-
   addCart = () => {
     console.log(this.props, this.state.quantity, "cartPhenomena");
     var itemToSave = new CartModel(
@@ -125,6 +80,17 @@ export default class Recipe extends Component {
     );
     console.log(itemToSave, "data");
     CartDataProvider.save(itemToSave);
+  };
+
+  removeCart = id => {
+    CartDataProvider.deleteById(id);
+  };
+
+  add = () => {
+    this.addCart();
+  };
+  remove = () => {
+    this.removeCart();
   };
 
   navigateToDetails = () => {
