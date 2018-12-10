@@ -1,4 +1,4 @@
-package com.foodorder;
+package com.foodfeast;
 
 import com.facebook.react.ReactActivity;
 

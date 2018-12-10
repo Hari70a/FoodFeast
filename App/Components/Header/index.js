@@ -7,7 +7,12 @@ import {
   Platform
 } from "react-native";
 import { colors } from "../../Config";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import CartDataProvider from "../../Store/CartDataProvider";
 
+// FontAwesome5;
 export default class Header extends Component {
   render() {
     return (
@@ -16,17 +21,21 @@ export default class Header extends Component {
         <View style={styles.homeHeaderView}>
           <Text style={styles.homeHeaderText}>{this.props.title}</Text>
         </View>
-        <View
-          style={{ flex: 0.5, flexDirection: "row", backgroundColor: "red" }}
-        >
+        <View style={{ flex: 0.4, flexDirection: "row" }}>
           <TouchableOpacity
             style={styles.filterbyStyle}
             onPress={() => this.props.toggleModal()}
           >
-            <Text>FilterBy</Text>
+            <FontAwesome name="filter" size={33} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.filterbyStyle} onPress={()=>this.props.gotoCart()}>
-            <Text>AddCart</Text>
+          <TouchableOpacity
+            style={styles.filterbyStyle}
+            onPress={() => this.props.gotoCart()}
+          >
+            <Text style={styles.count}>
+              {[...CartDataProvider.findAll()].length}
+            </Text>
+            <Entypo name="shopping-cart" size={33} color={colors.txtColor} />
           </TouchableOpacity>
         </View>
       </View>
@@ -49,7 +58,7 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   homeHeaderView: {
-    flex: 0.6,
+    flex: 0.7,
     alignItems: "center"
   },
   homeIconView: {
@@ -62,5 +71,8 @@ const styles = StyleSheet.create({
     marginRight: 5,
     padding: 10,
     ...center
+  },
+  count: {
+    color: colors.notifyColor
   }
 });

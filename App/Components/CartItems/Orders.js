@@ -18,7 +18,9 @@ export default class Orders extends Component<Props> {
                 <Text style={styles.itemTxt}>{cur.itemName}</Text>
               </View>
               <View style={styles.total}>
-                <Text style={styles.priceTxt}>₹ {cur.price}</Text>
+                <Text style={styles.priceTxt}>
+                  ₹ {cur.quantity * cur.price}
+                </Text>
               </View>
             </View>
           );

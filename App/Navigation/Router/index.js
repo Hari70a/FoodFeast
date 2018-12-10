@@ -27,16 +27,7 @@ const RootStack = createStackNavigator(
     Home: {
       screen: HomeScreen,
       navigationOptions: ({ navigation }) => ({
-        //title: 'FoodFeast',
         header: null
-        // headerStyle: { backgroundColor: colors.headerColor },
-        // headerTitle: <Header title={"FoodFeast"} />,
-        // headerRight: null,
-        // headerLeft: null,
-        // headerTitleStyle: {
-        //   fontWeight: "bold",
-        //   color: colors.bgCotllor
-        // }
       })
     },
     Details: {

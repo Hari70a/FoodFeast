@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, FlatList } from "react-native";
+import { Platform, StyleSheet, Text, View, ScrollView } from "react-native";
 import ImageWrapper from "./ImageWrapper";
-import { colors } from "../../Config/";
+import { colors, showAlert } from "../../Config/";
 import Description from "./Description";
 import HeaderWithBack from "../Header/HeaderWithBack";
 import QuantityInput from "./QuantityInput";
@@ -10,39 +10,71 @@ import AddCart from "./AddCart";
 import RemoveCart from "./RemoveCart";
 import CartDataProvider from "../../Store/CartDataProvider";
 
-
 export default class Details extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      quantityCount: 0,
+      isAvailable: props.navigation.state.params.isAvailable
+    };
+  }
 
-  addCart = () => {
-    console.log(this.props, this.state.quantity, "cartPhenomena");
-    var itemToSave = new CartModel(
-      this.props.id,
-      this.props.image_url,
-      this.props.item_name,
-      this.props.item_price,
-      this.props.average_rating
-    );
-    console.log(itemToSave, "data");
-    CartDataProvider.save(itemToSave);
+  componentDidMount() {
+    console.log(this.props, "IN Did Mount details");
+  }
+
+  // isItemInCart = id => {
+  //   const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
+  //   console.log(typeof temp, temp[0], "temp");
+  //   if (temp) {
+  //     if (temp[0]) return true;
+  //     else return false;
+  //   } else return false;
+  // };
+
+  // addCart = () => {
+  //   console.log(this.props, this.state.quantity, "cartPhenomena");
+  //   var itemToSave = new CartModel(
+  //     this.props.id,
+  //     this.props.image_url,
+  //     this.props.item_name,
+  //     this.props.item_price,
+  //     this.props.average_rating
+  //   );
+  //   console.log(itemToSave, "data");
+  //   CartDataProvider.save(itemToSave);
+  //   showAlert(`${this.props.item_name} added to cart successfully`);
+  //   this.setState({ isAvailable: true });
+  // };
+
+  // removeCart = () => {
+  //   CartDataProvider.deleteById(this.props.navigation.state.params.id);
+  //   showAlert(`${this.props.item_name} deleted from the cart successfully`);
+  //   this.setState({ isAvailable: false });
+  // };
+  updateQuantity = () => {
+    const dataToUpdate = {
+      id: this.props.navigation.state.params.id,
+      imageUrl: this.props.navigation.state.params.image_url,
+      itemName: this.props.navigation.state.params.item_name,
+      itemPrice: this.props.navigation.state.params.item_price,
+      avgRating: this.props.navigation.state.params.average_rating,
+      quantity: parseInt(this.state.quantityCount)
+    };
+    console.log(dataToUpdate, "dataToUpdate");
+    CartDataProvider.update(dataToUpdate, "quantity");
   };
 
-  removeCart = id => {
-    //CartDataProvider.deleteById(id);
-  };
-
-  add = () => {
-    this.addCart();
-  };
-
-  remove = () => {
-    this.removeCart();
+  onChangeCount = count => {
+    this.setState(count);
   };
 
   render() {
+    console.log(this.state, this.props, "state and props details");
     return (
       <ScrollView style={styles.container}>
         <HeaderWithBack
-          title={"Your Cart"}
+          title={"Details"}
           moveToPrevious={() => this.props.navigation.goBack()}
         />
         <View style={{ flex: 0.5 }}>
@@ -62,8 +94,13 @@ export default class Details extends Component {
             avgRating={this.props.navigation.state.params.average_rating}
           />
           <View style={styles.rowContainer}>
-            <AddCart onPress={this.add} />
-            <RemoveCart onPress={this.remove} />
+            {this.state.isAvailable ? (
+              <RemoveCart
+                onPress={this.props.navigation.state.params.removeCart}
+              />
+            ) : (
+              <AddCart onPress={this.props.navigation.state.params.addCart} />
+            )}
           </View>
           <QuantityInput
             count={this.state.quantityCount}
@@ -80,14 +117,17 @@ export default class Details extends Component {
     );
   }
 }
-const center={alignItems: 'center',justifyContent: 'center'}
+const center = { alignItems: "center", justifyContent: "center" };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.bgColor
   },
-  rowContainer:{
-    flexDirection: 'row',,
+  rowContainer: {
+    flexDirection: "row",
+    ...center
+  },
+  centerElem: {
     ...center
   }
 });

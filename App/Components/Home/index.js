@@ -15,6 +15,7 @@ import Loading from "../Loading";
 import MenuModal from "../Menumodal";
 import Header from "../Header";
 import APIHandlers from "../../Services/APIHandlers";
+import CartDataProvider from "../../Store/CartDataProvider";
 
 export default class Home extends Component {
   constructor(props) {

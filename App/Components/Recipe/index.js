@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
-import { colors } from "../../Config";
+import { colors, showAlert } from "../../Config";
 import ImageWrapper from "./ImageWrapper";
 import CartModel from "../../Store/CartModel";
 import CartDataProvider from "../../Store/CartDataProvider";
@@ -12,8 +12,8 @@ export default class Recipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: 0,
-      disableRemovecartBtn: true
+      quantityCount: 0,
+      isAvailable: false
     };
   }
 
@@ -23,10 +23,10 @@ export default class Recipe extends Component {
   }
 
   isItemInCart = id => {
-    // const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
-    // console.log(typeof temp, temp[0], "temp");
-    // if (temp[0]) return true;
-    // else return false;
+    const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
+    console.log(typeof temp, temp[0], "temp");
+    if (temp[0]) return true;
+    else return false;
   };
 
   render() {
@@ -56,12 +56,11 @@ export default class Recipe extends Component {
               />
             </View>
             <View style={styles.cartBtnContainer}>
-              <AddCart onPress={this.add} />
-              <RemoveCart onPress={this.remove} />
-              {/* <RemoveCart onPress={this.remove} /> */}
-              {/* {this.isItemInCart(this.props.id) ? (
-                <RemoveCart onPress={this.remove} />
-              ) : null} */}
+              {this.isItemInCart(this.props.id) ? (
+                <RemoveCart onPress={this.removeCart} />
+              ) : (
+                <AddCart onPress={this.addCart} />
+              )}
             </View>
           </View>
         </TouchableHighlight>
@@ -80,22 +79,25 @@ export default class Recipe extends Component {
     );
     console.log(itemToSave, "data");
     CartDataProvider.save(itemToSave);
+    showAlert(`${this.props.item_name} added to cart successfully`);
+    this.setState({ isAvailable: true });
   };
 
   removeCart = id => {
-    CartDataProvider.deleteById(id);
-  };
-
-  add = () => {
-    this.addCart();
-  };
-  remove = () => {
-    this.removeCart();
+    CartDataProvider.deleteById(this.props.id);
+    showAlert(`${this.props.item_name} deleted from the cart successfully`);
+    this.setState({ isAvailable: false });
   };
 
   navigateToDetails = () => {
     console.log(this.props, " INNN $$$$$ Ppros");
-    this.props.navigation.navigate("Details", { ...this.props });
+    this.props.navigation.navigate("Details", {
+      isAvailable: this.state.isAvailable,
+      isItemInCart: this.isItemInCart,
+      addCart: this.addCart,
+      removeCart: this.removeCart,
+      ...this.props
+    });
   };
 }
 

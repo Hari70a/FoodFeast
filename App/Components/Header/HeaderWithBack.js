@@ -7,7 +7,7 @@ import {
   Platform
 } from "react-native";
 import { colors } from "../../Config";
-
+import Ionicons from "react-native-vector-icons/Ionicons";
 export default class Header extends Component {
   render() {
     return (
@@ -16,7 +16,7 @@ export default class Header extends Component {
           style={styles.backViewContainer}
           onPress={() => this.props.moveToPrevious()}
         >
-          <Text>Back</Text>
+          <Ionicons name="ios-arrow-round-back" size={33} />
         </TouchableOpacity>
         <View style={styles.homeHeaderView}>
           <Text style={styles.homeHeaderText}>{this.props.title}</Text>

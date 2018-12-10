@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { colors } from "../../Config";
 import HeaderWithBack from "../Header/HeaderWithBack";
 import CouponField from "./CouponField";
@@ -23,6 +23,7 @@ export default class CartItems extends Component {
   async componentDidMount() {
     const savedFoodItems = Array.from(CartDataProvider.findAll());
     const subtotal = await this.calcSubtotal(savedFoodItems);
+    console.log(subtotal, "subtotal");
     const total = this.calcTotal(subtotal, this.state.deliveryFee);
     this.setState({ savedFoodItems, subtotal, total });
   }
@@ -51,16 +52,32 @@ export default class CartItems extends Component {
   };
 
   calcSubtotal = savedItems =>
-    savedItems.reduce((acc, cur) => acc + cur.price, 0);
+    savedItems.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
 
   calcTotal = (subtotal, deliveryFee) => deliveryFee + subtotal;
 
   render() {
+    if (this.state.savedFoodItems.length == 0) {
+      return (
+        <View style={{ flex: 1 }}>
+          <HeaderWithBack
+            title={"Your Cart"}
+            count={this.state.savedFoodItems.length}
+            moveToPrevious={() => this.props.navigation.goBack()}
+          />
+          <View style={styles.errorMsgContainer}>
+            <Text style={styles.errMsgTxt}>
+              Your cart is empty!{"\n"}Please add new item
+            </Text>
+          </View>
+        </View>
+      );
+    }
     return (
       <ScrollView style={styles.container}>
         <HeaderWithBack
           title={"Your Cart"}
-          count={data.length}
+          count={this.state.savedFoodItems.length}
           moveToPrevious={() => this.props.navigation.goBack()}
         />
         <Orders items={this.state.savedFoodItems} />
@@ -112,5 +129,13 @@ const styles = StyleSheet.create({
   },
   countTxt: {
     color: colors.txtColor
+  },
+  errorMsgContainer: {
+    flex: 0.8,
+    ...center
+  },
+  errMsgTxt: {
+    color: colors.txtColor,
+    fontSize: 16
   }
 });

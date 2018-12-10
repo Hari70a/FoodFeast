@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import { colors } from "../../Config";
 import Loading from "../Loading";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 const menuItems = [
   { id: 1, title: "Price low to high" },
   { id: 2, title: "Rating" }
@@ -23,11 +25,11 @@ export default class MenuContent extends Component {
       <View>
         <View style={styles.headerContainer}>
           <TouchableHighlight
-            style={{ backgroundColor: "green", padding: 15 }}
+            style={{ padding: 15 }}
             underlayColor={"green"}
             onPress={() => this.props.closeModal()}
           >
-            <Text>Close</Text>
+            <Ionicons name="ios-close-circle" size={33} />
           </TouchableHighlight>
         </View>
         <View style={styles.contentContainer}>
