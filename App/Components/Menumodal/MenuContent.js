@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
-  FlatList,
-  Modal,
   TouchableHighlight,
   Dimensions,
   TouchableOpacity
 } from "react-native";
 import { colors } from "../../Config";
-import Loading from "../Loading";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const menuItems = [

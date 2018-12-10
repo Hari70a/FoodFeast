@@ -6,17 +6,13 @@ const CartDataProvider = {
     return getListData;
   },
   save: function(listData) {
-    console.log(listData, "listData");
     CartSchema.write(() => {
       CartSchema.create("CartItem", listData);
     });
   },
   update: function(listData) {
     var id = listData.id;
-    console.log(listData, "listData");
-    //if (!callback) return;
     CartSchema.write(() => {
-      //callback();
       CartSchema.create("CartItem", listData, true);
     });
   },

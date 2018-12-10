@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import ImageWrapper from "./ImageWrapper";
 import { colors, showAlert } from "../../Config/";
 import Description from "./Description";
@@ -19,39 +19,6 @@ export default class Details extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.props, "IN Did Mount details");
-  }
-
-  // isItemInCart = id => {
-  //   const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
-  //   console.log(typeof temp, temp[0], "temp");
-  //   if (temp) {
-  //     if (temp[0]) return true;
-  //     else return false;
-  //   } else return false;
-  // };
-
-  // addCart = () => {
-  //   console.log(this.props, this.state.quantity, "cartPhenomena");
-  //   var itemToSave = new CartModel(
-  //     this.props.id,
-  //     this.props.image_url,
-  //     this.props.item_name,
-  //     this.props.item_price,
-  //     this.props.average_rating
-  //   );
-  //   console.log(itemToSave, "data");
-  //   CartDataProvider.save(itemToSave);
-  //   showAlert(`${this.props.item_name} added to cart successfully`);
-  //   this.setState({ isAvailable: true });
-  // };
-
-  // removeCart = () => {
-  //   CartDataProvider.deleteById(this.props.navigation.state.params.id);
-  //   showAlert(`${this.props.item_name} deleted from the cart successfully`);
-  //   this.setState({ isAvailable: false });
-  // };
   updateQuantity = () => {
     const dataToUpdate = {
       id: this.props.navigation.state.params.id,
@@ -61,7 +28,6 @@ export default class Details extends Component {
       avgRating: this.props.navigation.state.params.average_rating,
       quantity: parseInt(this.state.quantityCount)
     };
-    console.log(dataToUpdate, "dataToUpdate");
     CartDataProvider.update(dataToUpdate, "quantity");
   };
 
@@ -70,7 +36,6 @@ export default class Details extends Component {
   };
 
   render() {
-    console.log(this.state, this.props, "state and props details");
     return (
       <ScrollView style={styles.container}>
         <HeaderWithBack

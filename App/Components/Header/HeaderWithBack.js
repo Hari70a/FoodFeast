@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { colors } from "../../Config";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
 export default class Header extends Component {
   render() {
     return (

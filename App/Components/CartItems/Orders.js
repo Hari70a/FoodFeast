@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, FlatList } from "react-native";
-import { foodItems, colors } from "../../Config";
+import { StyleSheet, Text, View } from "react-native";
+import { colors } from "../../Config";
 
-type Props = {};
-export default class Orders extends Component<Props> {
+export default class Orders extends Component {
   render() {
     return (
       <View>

@@ -1,21 +1,11 @@
 import React, { Component } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Modal,
-  TouchableHighlight,
-  Dimensions
-} from "react-native";
-import { foodItems, colors } from "../../Config";
+import { StyleSheet, View, FlatList } from "react-native";
+import { colors } from "../../Config";
 import Recipe from "../Recipe";
 import Loading from "../Loading";
 import MenuModal from "../Menumodal";
 import Header from "../Header";
 import APIHandlers from "../../Services/APIHandlers";
-import CartDataProvider from "../../Store/CartDataProvider";
 
 export default class Home extends Component {
   constructor(props) {
@@ -37,7 +27,6 @@ export default class Home extends Component {
           ...item
         });
       });
-      console.log(formattedData, "formattedData");
       this.setState({ foodItems: formattedData, isLoading: false });
     });
   }

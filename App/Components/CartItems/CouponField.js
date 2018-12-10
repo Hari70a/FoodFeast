@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   TextInput
 } from "react-native";
-import { foodItems, colors } from "../../Config";
+import { colors } from "../../Config";
 
 export default class CouponField extends Component {
   render() {

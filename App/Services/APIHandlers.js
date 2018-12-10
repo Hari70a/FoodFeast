@@ -10,7 +10,6 @@ const APIHandlers = {
       }
     };
     return fetch(APIBaseURL, request).then(res => {
-      console.log(res, "res");
       return res.json();
     });
   }

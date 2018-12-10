@@ -5,23 +5,6 @@ import HomeScreen from "../../Components/Home";
 import DetailsScreen from "../../Components/Recipe/Details";
 import CartItemsScreen from "../../Components/CartItems/";
 
-import { colors } from "../../Config/";
-
-const Header = props => {
-  return (
-    <Text
-      style={{
-        marginLeft: 15,
-        fontWeight: "bold",
-        color: "#fff",
-        fontSize: 18
-      }}
-    >
-      {props.title}
-    </Text>
-  );
-};
-
 const RootStack = createStackNavigator(
   {
     Home: {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import { Text, StyleSheet, TouchableHighlight } from "react-native";
 import { colors } from "../../Config";
 
 export default class AddCart extends Component {

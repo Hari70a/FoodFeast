@@ -1,16 +1,6 @@
 import React, { Component } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Modal,
-  TouchableHighlight,
-  Dimensions
-} from "react-native";
+import { StyleSheet, View, Modal, Dimensions } from "react-native";
 import { colors } from "../../Config";
-import Loading from "../Loading";
 import MenuContent from "./MenuContent";
 
 export default class Menumodal extends Component {

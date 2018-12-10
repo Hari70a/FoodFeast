@@ -17,27 +17,13 @@ export default class Recipe extends Component {
     };
   }
 
-  componentDidMount() {
-    // console.log(CartDataProvider.deleteAll());
-    console.log([...CartDataProvider.findAll()], "INN Find all");
-  }
-
   isItemInCart = id => {
     const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
-    console.log(typeof temp, temp[0], "temp");
     if (temp[0]) return true;
     else return false;
   };
 
   render() {
-    console.log(this.props, "Props ");
-    // // const temp = Array.from(CartDataProvider.findById(this.props.id));
-    // const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
-    // console.log(typeof temp, temp[0], "temp");
-    // console.log(
-    //   Object.assign({}, CartDataProvider.findById(this.props.id)),
-    //   "Isavailable"
-    // );
     return (
       <View style={styles.container}>
         <TouchableHighlight
@@ -69,7 +55,6 @@ export default class Recipe extends Component {
   }
 
   addCart = () => {
-    console.log(this.props, this.state.quantity, "cartPhenomena");
     var itemToSave = new CartModel(
       this.props.id,
       this.props.image_url,
@@ -77,7 +62,6 @@ export default class Recipe extends Component {
       this.props.item_price,
       this.props.average_rating
     );
-    console.log(itemToSave, "data");
     CartDataProvider.save(itemToSave);
     showAlert(`${this.props.item_name} added to cart successfully`);
     this.setState({ isAvailable: true });
@@ -90,7 +74,6 @@ export default class Recipe extends Component {
   };
 
   navigateToDetails = () => {
-    console.log(this.props, " INNN $$$$$ Ppros");
     this.props.navigation.navigate("Details", {
       isAvailable: this.state.isAvailable,
       isItemInCart: this.isItemInCart,

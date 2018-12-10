@@ -23,7 +23,6 @@ export default class CartItems extends Component {
   async componentDidMount() {
     const savedFoodItems = Array.from(CartDataProvider.findAll());
     const subtotal = await this.calcSubtotal(savedFoodItems);
-    console.log(subtotal, "subtotal");
     const total = this.calcTotal(subtotal, this.state.deliveryFee);
     this.setState({ savedFoodItems, subtotal, total });
   }
