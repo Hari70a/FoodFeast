@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import { StyleSheet, TouchableHighlight } from "react-native";
 import { colors } from "../../Config";
+import Entypo from "react-native-vector-icons/Entypo";
 
 export default class RemoveCart extends Component {
   render() {
@@ -10,7 +11,7 @@ export default class RemoveCart extends Component {
         underlayColor={colors.bgColor}
         onPress={() => this.props.onPress()}
       >
-        <Text style={styles.plusBtn}>-</Text>
+        <Entypo name="minus" size={30} />
       </TouchableHighlight>
     );
   }
@@ -18,9 +19,10 @@ export default class RemoveCart extends Component {
 const center = { alignItems: "center", justifyContent: "center" };
 const styles = StyleSheet.create({
   container: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 50,
+    height: 50,
+    padding: 5,
+    borderRadius: 25,
     borderWidth: 1.5,
     borderColor: colors.txtColor,
     marginLeft: 15,
@@ -28,6 +30,6 @@ const styles = StyleSheet.create({
   },
   plusBtn: {
     color: colors.txtColor,
-    fontSize: 18
+    fontSize: 22
   }
 });

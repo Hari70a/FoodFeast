@@ -16,7 +16,8 @@ export default class CartItems extends Component {
       couponCode: "",
       alertTxt: "",
       deliveryFee: 30,
-      total: 0
+      total: 0,
+      modalVisible: false
     };
   }
 
@@ -55,6 +56,28 @@ export default class CartItems extends Component {
 
   calcTotal = (subtotal, deliveryFee) => deliveryFee + subtotal;
 
+  toggleModal = () => {
+    this.setState({
+      modalVisible: !this.state.modalVisible
+    });
+  };
+
+  formItem = item => {
+    return {
+      id: item.id,
+      image_url: item.imageUrl,
+      item_name: item.itemName,
+      item_price: item.price,
+      average_rating: item.rating.toFixed(1),
+      quantity: item.quantity
+    };
+  };
+
+  gotoDetail = foodItem => {
+    var item = this.formItem(foodItem);
+    this.props.navigation.navigate("Details", { ...item });
+  };
+
   render() {
     if (this.state.savedFoodItems.length == 0) {
       return (
@@ -77,9 +100,14 @@ export default class CartItems extends Component {
         <HeaderWithBack
           title={"Your Cart"}
           count={this.state.savedFoodItems.length}
-          moveToPrevious={() => this.props.navigation.goBack()}
+          moveToPrevious={() => this.props.navigation.navigate("Home")}
         />
-        <Orders items={this.state.savedFoodItems} />
+        <Orders
+          items={this.state.savedFoodItems}
+          toggleModal={this.toggleModal}
+          gotoDetail={this.gotoDetail}
+        />
+
         <CouponField
           code={this.state.couponCode}
           onChangeCode={this.onChangeCode}
@@ -121,8 +149,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colors.txtColor
   },
-  subtotal: { flex: 0.8, justifyContent: "center", marginLeft: 10 },
-  count: { flex: 0.2, ...center },
+  subtotal: {
+    flex: 0.8,
+    justifyContent: "center",
+    marginLeft: 10
+  },
+  count: {
+    flex: 0.2,
+    ...center
+  },
   subtotalTxt: {
     color: colors.txtColor
   },
@@ -135,6 +170,7 @@ const styles = StyleSheet.create({
   },
   errMsgTxt: {
     color: colors.txtColor,
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: "Poppins-Regular"
   }
 });

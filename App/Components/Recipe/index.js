@@ -1,28 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
-import { colors, showAlert } from "../../Config";
+import { StyleSheet, View, TouchableHighlight } from "react-native";
+import { colors } from "../../Config";
 import ImageWrapper from "./ImageWrapper";
-import CartModel from "../../Store/CartModel";
-import CartDataProvider from "../../Store/CartDataProvider";
-import AddCart from "./AddCart";
-import RemoveCart from "./RemoveCart";
 import Description from "./Description";
 
 export default class Recipe extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      quantityCount: 0,
-      isAvailable: false
-    };
-  }
-
-  isItemInCart = id => {
-    const temp = Object.assign({}, CartDataProvider.findById(this.props.id));
-    if (temp[0]) return true;
-    else return false;
-  };
-
   render() {
     return (
       <View style={styles.container}>
@@ -35,18 +17,12 @@ export default class Recipe extends Component {
               <ImageWrapper
                 sourceUrl={this.props.image_url}
                 itemName={this.props.item_name}
+                style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
               />
               <Description
                 itemPrice={this.props.item_price}
                 avgRating={this.props.average_rating}
               />
-            </View>
-            <View style={styles.cartBtnContainer}>
-              {this.isItemInCart(this.props.id) ? (
-                <RemoveCart onPress={this.removeCart} />
-              ) : (
-                <AddCart onPress={this.addCart} />
-              )}
             </View>
           </View>
         </TouchableHighlight>
@@ -54,28 +30,8 @@ export default class Recipe extends Component {
     );
   }
 
-  addCart = () => {
-    var itemToSave = new CartModel(
-      this.props.id,
-      this.props.image_url,
-      this.props.item_name,
-      this.props.item_price,
-      this.props.average_rating
-    );
-    CartDataProvider.save(itemToSave);
-    showAlert(`${this.props.item_name} added to cart successfully`);
-    this.setState({ isAvailable: true });
-  };
-
-  removeCart = id => {
-    CartDataProvider.deleteById(this.props.id);
-    showAlert(`${this.props.item_name} deleted from the cart successfully`);
-    this.setState({ isAvailable: false });
-  };
-
   navigateToDetails = () => {
     this.props.navigation.navigate("Details", {
-      isAvailable: this.state.isAvailable,
       isItemInCart: this.isItemInCart,
       addCart: this.addCart,
       removeCart: this.removeCart,
@@ -101,7 +57,8 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   ratingTxt: {
-    color: "#000"
+    color: colors.txtColor,
+    fontFamily: "Poppins-Regular"
   },
   ratingContainer: {
     flex: 0.3,

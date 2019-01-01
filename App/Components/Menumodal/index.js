@@ -18,10 +18,7 @@ export default class Menumodal extends Component {
           <View style={{ flex: 1 }}>
             <View style={styles.modalOuterContainer}>
               <View style={styles.modalContainer}>
-                <MenuContent
-                  closeModal={this.props.closeModal}
-                  filterBy={this.props.filterBy}
-                />
+                {this.props.children}
               </View>
             </View>
           </View>
@@ -40,6 +37,7 @@ const styles = StyleSheet.create({
     height: 300,
     width: Dimensions.get("window").width - 40,
     backgroundColor: colors.bgColor,
+    borderRadius: 10,
     ...center
   },
   modalOuterContainer: {

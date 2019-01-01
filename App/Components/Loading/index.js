@@ -13,8 +13,8 @@ export default class Loading extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator color={colors.headerColor} />
-        <Text style={{ color: colors.txtColor }}>Loading...</Text>
+        <ActivityIndicator color={colors.headerColor} size={'small'} />
+        <Text style={styles.loadingTxt}>Loading...</Text>
       </View>
     );
   }
@@ -26,5 +26,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.bgColor,
     ...center
+  },
+  loadingTxt:{
+    color: colors.txtColor,
+    fontFamily: 'Poppins-SemiBold'
   }
 });

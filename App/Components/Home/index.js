@@ -6,6 +6,8 @@ import Loading from "../Loading";
 import MenuModal from "../Menumodal";
 import Header from "../Header";
 import APIHandlers from "../../Services/APIHandlers";
+import CartDataProvider from "../../Store/CartDataProvider";
+import MenuContent from '../Menumodal/MenuContent'
 
 export default class Home extends Component {
   constructor(props) {
@@ -14,7 +16,8 @@ export default class Home extends Component {
     this.state = {
       foodItems: [],
       isLoading: true,
-      modalVisible: false
+      modalVisible: false,
+      cartCount: 0
     };
   }
 
@@ -72,7 +75,17 @@ export default class Home extends Component {
 
   render() {
     if (this.state.isLoading) {
-      return <Loading />;
+      return (
+        <View style={styles.container}>
+          <Header
+            title={"FoodFeast"}
+            toggleModal={this.toggleModal}
+            gotoPrevious={this.moveToPrevious}
+            gotoCart={this.gotoCart}
+          />
+          <Loading/>
+        </View>
+      )
     }
     return (
       <View style={styles.container}>
@@ -86,8 +99,12 @@ export default class Home extends Component {
           modalVisible={this.state.modalVisible}
           toggleModal={this.toggleModal}
           closeModal={() => this.setState({ modalVisible: false })}
-          filterBy={this.filterBy}
-        />
+        >
+          <MenuContent
+            closeModal={() => this.setState({ modalVisible: false })}
+            filterBy={this.filterBy}
+          />
+        </MenuModal>
         <FlatList
           data={this.state.foodItems}
           renderItem={({ item }) => (
@@ -100,7 +117,6 @@ export default class Home extends Component {
   }
 }
 
-const center = { alignItems: "center", justifyContent: "center" };
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -9,36 +9,18 @@ import {
   TouchableOpacity
 } from "react-native";
 import { colors, images } from "../../Config";
-import ModalHeader from "./ModalHeader";
+import ModalHeader from ".././Menumodal/ModalHeader";
 import Feather from "react-native-vector-icons/Feather";
 
-const menuItems = [
-  { id: 1, title: "Price low to high", imgSource: images.price },
-  { id: 2, title: "Rating", imgSource: images.rating }
-];
-
-export default class MenuContent extends Component {
+export default class UpdateItemQtyModal extends Component {
   render() {
-    console.log(this.props, "Props MenuContent");
+    console.log(this.props, "Prop UpdateQy");
     return (
       <View>
-        <ModalHeader title={"Filters"} closeModal={this.props.closeModal} />
-        <View style={styles.contentContainer}>
-          {menuItems.map((cur, index) => {
-            return (
-              <TouchableOpacity
-                style={styles.menu}
-                key={index}
-                onPress={() => this.props.filterBy(cur.id)}
-              >
-                <Image source={cur.imgSource} style={styles.imageSize} />
-                <View style={styles.menuTxtContain}>
-                  <Text style={styles.menuTxt}>{cur.title}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+        <ModalHeader
+          title={"Update item quantity"}
+          closeModal={this.props.closeModal}
+        />
       </View>
     );
   }

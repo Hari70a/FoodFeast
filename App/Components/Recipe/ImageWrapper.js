@@ -11,8 +11,8 @@ export default class ImageWrapper extends Component {
         <ImageBackground
           source={{ uri: this.props.sourceUrl }}
           style={[styles.imageStyle, style]}
-          borderTopLeftRadius={this.props.style ? 0 : 10}
-          borderTopRightRadius={this.props.style ? 0 : 10}
+          borderTopLeftRadius={borderTopLeftRadius ? borderTopLeftRadius :  0}
+          borderTopRightRadius={borderTopRightRadius ? borderTopRightRadius : 0}
         >
           <View
             style={[
@@ -20,10 +20,10 @@ export default class ImageWrapper extends Component {
               {
                 borderTopLeftRadius: borderTopLeftRadius
                   ? borderTopLeftRadius
-                  : 10,
+                  : 0,
                 borderTopRightRadius: borderTopRightRadius
                   ? borderTopRightRadius
-                  : 10
+                  : 0
               }
             ]}
           >
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     ...posFixed
   },
   itemName: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 25
+    color: colors.bgColor,
+    fontFamily: "Poppins-SemiBold",
+    fontSize: 22
   }
 });

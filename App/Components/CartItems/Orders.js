@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { colors } from "../../Config";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
 
 export default class Orders extends Component {
   render() {
@@ -8,20 +10,29 @@ export default class Orders extends Component {
       <View>
         <Text style={styles.title}>Your Orders</Text>
         {this.props.items.map((cur, index) => {
+          console.log(cur, index, "Cur index");
           return (
-            <View style={styles.listContainer} key={index}>
+            <TouchableOpacity
+              style={styles.listContainer}
+              key={index}
+              onPress={() => this.props.gotoDetail(cur)}
+            >
               <View style={styles.count}>
-                <Text style={styles.countTxt}>{cur.quantity}X</Text>
+                <Text style={styles.countTxt}>{cur.quantity}</Text>
+                <Feather name="x" size={15} style={{ marginLeft: 3 }} />
               </View>
               <View style={styles.items}>
-                <Text style={styles.itemTxt}>{cur.itemName}</Text>
+                <Text style={styles.countTxt}>{cur.itemName}</Text>
               </View>
               <View style={styles.total}>
-                <Text style={styles.priceTxt}>
-                  ₹ {cur.quantity * cur.price}
-                </Text>
+                <FontAwesome
+                  name="rupee"
+                  size={15}
+                  style={{ marginRight: 3 }}
+                />
+                <Text style={styles.countTxt}>{cur.quantity * cur.price}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           );
         })}
       </View>
@@ -37,7 +48,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: colors.txtColor,
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "Poppins-SemiBold",
     marginLeft: 15
   },
   listContainer: {
@@ -48,16 +59,13 @@ const styles = StyleSheet.create({
     borderColor: colors.txtColor
   },
   countTxt: {
-    color: colors.txtColor
+    color: colors.txtColor,
+    fontFamily: "Poppins-Regular"
   },
-  itemTxt: {
-    color: colors.txtColor
-  },
-  priceTxt: {
-    color: colors.txtColor
-  },
+
   count: {
     flex: 0.2,
+    flexDirection: "row",
     ...center
   },
   items: {
@@ -65,6 +73,7 @@ const styles = StyleSheet.create({
   },
   total: {
     flex: 0.2,
+    flexDirection: "row",
     ...center
   }
 });

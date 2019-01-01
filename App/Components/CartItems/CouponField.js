@@ -59,17 +59,19 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingLeft: 5,
-    color: colors.txtColor
+    color: colors.txtColor,
+    fontFamily:'Poppins-Regular'
   },
   applyBtn: {
     flex: 0.2,
     ...center
   },
   applyTxt: {
-    color: "green",
-    fontWeight: "bold"
+    color: colors.btnBg,
+    fontFamily:'Poppins-SemiBold'
   },
   alertTxt: {
-    color: "red"
+    color: colors.headerColor,
+    fontFamily:'Poppins-Regular'
   }
 });

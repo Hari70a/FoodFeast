@@ -148,9 +148,10 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-vector-icons')
-    compile project(':react-native-gesture-handler')
-    compile project(':realm')
+    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-gesture-handler')
+    implementation project(':realm')
+    // compile 'org.webkit:android-jsc:r174650'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
@@ -162,3 +163,9 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+// configurations.all {
+//     resolutionStrategy {
+//         force 'org.webkit:android-jsc:r224109'
+//     }
+// }

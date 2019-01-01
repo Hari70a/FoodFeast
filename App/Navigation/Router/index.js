@@ -4,6 +4,7 @@ import { Text } from "react-native";
 import HomeScreen from "../../Components/Home";
 import DetailsScreen from "../../Components/Recipe/Details";
 import CartItemsScreen from "../../Components/CartItems/";
+import ListStore from "../../Mobx/ListStore";
 
 const RootStack = createStackNavigator(
   {
@@ -30,4 +31,8 @@ const RootStack = createStackNavigator(
     initialRouteName: "Home"
   }
 );
-export default createAppContainer(RootStack);
+const AppContainer = createAppContainer(RootStack);
+
+export default AppContainer;
+
+

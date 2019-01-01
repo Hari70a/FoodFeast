@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
   },
   homeHeaderText: {
     color: colors.headerColor,
-    fontWeight: "bold",
-    fontSize: 18
+    fontFamily: "Poppins-SemiBold",
+    fontSize: 20
   },
   homeHeaderView: {
     flex: 0.6,

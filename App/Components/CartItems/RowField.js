@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../../Config";
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 export default class RowField extends Component {
   render() {
@@ -11,7 +12,8 @@ export default class RowField extends Component {
           <Text style={styles.subtotalTxt}>{this.props.caption}</Text>
         </View>
         <View style={styles.count}>
-          <Text style={styles.countTxt}>₹ {this.props.amount}</Text>
+          <FontAwesome name="rupee" size={15}style={{marginRight:3}}/>
+          <Text style={styles.countTxt}>{this.props.amount}</Text>
         </View>
       </View>
     );
@@ -27,12 +29,21 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colors.txtColor
   },
-  subtotal: { flex: 0.8, justifyContent: "center" },
-  count: { flex: 0.2, ...center },
+  subtotal: {
+    flex: 0.8,
+    justifyContent: "center"
+  },
+  count: { 
+    flex: 0.2,
+    flexDirection: 'row',
+    ...center
+  },
   subtotalTxt: {
-    color: colors.txtColor
+    color: colors.txtColor,
+    fontFamily: 'Poppins-Regular'
   },
   countTxt: {
-    color: colors.txtColor
+    color: colors.txtColor,
+    fontFamily: 'Poppins-Regular'
   }
 });
